@@ -10,26 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Go 1.12
-      uses: actions/setup-go@v1
-      with:
-       version: 1.12
-      id: go
-
     - uses: actions/checkout@v1
-    - name: Version
-      run: clang++ --version
-
-    - name: Build
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       env:
-       GO111MODULE: on
-       GOPATH: /home/runner/work/
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-       export CREATE_EVENT_REF_TYPE=$(jq --raw-output .ref_type "$GITHUB_EVENT_PATH")
-       export TAGNAME=$(jq --raw-output .ref "$GITHUB_EVENT_PATH")
-       if [ "$CREATE_EVENT_REF_TYPE" != "tag" ]; then echo "ref_type is not a tag: ${CREATE_EVENT_REF_TYPE}" && exit 78; fi
-       clang++ -std=c++1y -Wall -Wextra -pedantic src/test.cpp && ./a.out
-       go get -u github.com/tcnksm/ghr
-       $GOPATH/bin/ghr -n ${TAGNAME} -b "Release {$TAGNAME}" -draft ${TAGNAME} a.out
+      with:
+       tag_name: ${{ github.ref }}
+       release_name: ${{ github.ref }}
+       draft: true
+       prerelease: false
+    
+    - name: Build
+      run: clang++ -std=c++1y -Wall -Wextra -pedantic src/test.cpp && ./a.out
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@master
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       upload_url: ${{ steps.create_release.outputs.upload_url }}
+       asset_path: a.out
+       asset_name: a.out
+       asset_content_type: application/octet-stream
 
