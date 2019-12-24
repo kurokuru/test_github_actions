@@ -5,9 +5,13 @@ on:
   branches:
    - develop
    - master
+  tags:
+   - "!*"
  pull_request:
   branches:
    - ".*"
+  tags:
+   - "!*"
 
 jobs:
   build:
