@@ -31,5 +31,5 @@ jobs:
        if [ "$CREATE_EVENT_REF_TYPE" != "tag" ]; then echo "ref_type is not a tag: ${CREATE_EVENT_REF_TYPE}" && exit 78; fi
        clang++ -std=c++1y -Wall -Wextra -pedantic src/test.cpp && ./a.out
        go get -u github.com/tcnksm/ghr
-       $GOPATH/bin/ghr -n ${TAGNAME} -b "Release {$TAGNAME}" -draft ${TAGNAME} a.out
+       $GOPATH/bin/ghr -n ${TAGNAME} -b "Release ${TAGNAME}" -draft ${TAGNAME} a.out
 
