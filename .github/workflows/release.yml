@@ -2,8 +2,10 @@ name: Release
 
 on:
  create:
+  branches:
+   - "!*"
   tags:
-  - v*.*.*
+   - v*.*.*
 
 jobs:
  build:
