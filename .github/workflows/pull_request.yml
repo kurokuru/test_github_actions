@@ -1,0 +1,17 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Version
+      run: clang++ --version
+
+    - name: Build
+      run: clang++ -std=c++1y -Wall -Wextra -pedantic src/test.cpp && ./a.out

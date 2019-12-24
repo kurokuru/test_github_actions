@@ -7,11 +7,6 @@ on:
    - master
   tags:
    - "!*"
- pull_request:
-  branches:
-   - ".*"
-  tags:
-   - "!*"
 
 jobs:
   build:
@@ -32,9 +27,4 @@ jobs:
       with:
        name: artifact
        path: a.out
-#    - name: Run a one-line script
-#      run: echo Hello, world!
-#    - name: Run a multi-line script
-#      run: |
-#        echo Add other actions to build,
-#        echo test, and deploy your project.
+
