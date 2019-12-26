@@ -1,1 +1,1 @@
-https://github.com/kurokuru/test_github_actions/workflows/CI/badge.svg
+![](https://github.com/kurokuru/test_github_actions/workflows/CI/badge.svg?branch=master)
